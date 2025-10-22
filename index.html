@@ -62,7 +62,7 @@
             celulaNascimento.innerHTML = pessoas.nascimento;
             celulaTelefone.innerHTML = pessoas.telefone;
             celulaEndereco.innerHTML = pessoas.endereco;
-            celulaExcluir.innerHTML = pessoas.endereco;
+            celulaExcluir.innerHTML = '<button onclick="excluir(\'' + pessoas._id + '\')">Excluir</button>';
            })
         }
     
@@ -93,8 +93,8 @@
             
         });
     }
-    function Excluir(){
-        
+    function Excluir(id){
+        fetch("https://crudcrud.com/api/"+token+"/pessoas", 
     }
 
 
