@@ -57,10 +57,12 @@
             var celulaTelefone = linha.insertCell(2);
             var celulaEndereco = linha.insertCell(3);
             var celulaExcluir = linha.insertCell(4);
+
             celulaNome.innerHTML = pessoas.nome;
             celulaNascimento.innerHTML = pessoas.nascimento;
             celulaTelefone.innerHTML = pessoas.telefone;
             celulaEndereco.innerHTML = pessoas.endereco;
+            celulaExcluir.innerHTML = pessoas.endereco;
            })
         }
     
@@ -90,6 +92,9 @@
             setTimeout(window.location.href = "index.html", 2000);
             
         });
+    }
+    function Excluir(){
+        
     }
 
 
