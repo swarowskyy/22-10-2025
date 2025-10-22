@@ -62,9 +62,9 @@
             celulaNascimento.innerHTML = pessoas.nascimento;
             celulaTelefone.innerHTML = pessoas.telefone;
             celulaEndereco.innerHTML = pessoas.endereco;
-            celulaExcluir.innerHTML = '<button onclick="excluir(\'' + pessoas._id + '\')">Excluir</button>';
+            celulaExcluir.innerHTML = '<button onclick="excluir(\'' + pessoas._id + '\')">Excluir</button>'
            })
-        }
+        };
     
     function cadastrar() {
         var token = "103ff56960ee454598812e4a842c9e99";
@@ -93,9 +93,17 @@
             
         });
     }
-    function Excluir(id){
-        fetch("https://crudcrud.com/api/"+token+"/pessoas", 
+    function excluir(id){
+        fetch("https://crudcrud.com/api/"+token+"/pessoas/" + id, {
+            method: "DELETE"
+        })
+        .then(()=> console.log("pessoa deletada"))
+        .catch(error => console.error("Erro no  DELETE:", error))
+        .finally(() => {
+            // redirecionar para a pagina inicial
+            setTimeout(window.location.href = "index.html", 2000);
+            
+        });
+
     }
-
-
 </script>
