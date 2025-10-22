@@ -1,6 +1,8 @@
 <h3>Lista de Alunos</h3>
+<!--cria uma tabela-->
 <table id="tabelaAlunos" border="1">
     <thead>
+        <!-- linha da tebela-->
         <tr>
             <th>Nome</th>
             <th>Nascimento</th>
@@ -8,6 +10,7 @@
             <th>Endereço</th>
             <th>Excluir</th>
         </tr>
+        <!--corpo da tabela-->
     </thead>
     <tbody>
         <!-- Linhas preenchidas pelo JavaScript -->
@@ -35,11 +38,31 @@
          // Exemplo de requisição GET para listar pessoas
         fetch("https://crudcrud.com/api/"+token+"/pessoas")
         .then(response => response.json())
-        .then(data => console.log(data) )
-        .catch(error => console.error("Erro no GET:", error));
+        .then(data => botaTabela(data) )
+        .catch(error => console.log(error));
 
 
-
+        //criado função botatabela que recebem dados da api de parametro
+        function botaTabela(pessoas){
+           console.log(pessoas);
+           //cria avariavel tabela que pega o corpo da tabela pelo id
+           //pega a tag tbody dentro da tabela 
+           //[0] pq gettagname retorna um array e queremos o primeiro elemento deste array
+           var tabela = document.getElementById('tabelaAlunos').getElementsByTagName("tbody")[0];
+           //inserir os dados na tabela apartir da avriavel do parametro pessoas
+           pessoas.forEach(function(pessoas){
+            var linha = tabela.insertRow();
+            var celulaNome = linha.insertCell(0);
+            var celulaNascimento= linha.insertCell(1);
+            var celulaTelefone = linha.insertCell(2);
+            var celulaEndereco = linha.insertCell(3);
+            var celulaExcluir = linha.insertCell(4);
+            celulaNome.innerHTML = pessoas.nome;
+            celulaNascimento.innerHTML = pessoas.nascimento;
+            celulaTelefone.innerHTML = pessoas.telefone;
+            celulaEndereco.innerHTML = pessoas.endereco;
+           })
+        }
     
     function cadastrar() {
         var token = "103ff56960ee454598812e4a842c9e99";
