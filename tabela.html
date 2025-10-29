@@ -1,0 +1,97 @@
+<a href="index.html">Ir para a tabela</a>
+<h3>Lista de Alunos</h3>
+cria uma tabela
+<table id="tabelaAlunos" border="1">
+    <thead>
+         linha da tebela
+        <tr>
+            <th>Nome</th>
+            <th>Nascimento</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Excluir</th>
+            <th>Atualizar</th>
+        </tr>
+        <!-- corpo da tabela -->
+    </thead>
+    <tbody>
+        <!-- Linhas preenchidas pelo JavaScript -->
+    </tbody>
+    <script>
+        var token = "4f4d07480c7e485399f56c119b824e9d";
+              //Exemplo de requisição GET para listar pessoas
+            fetch("https://crudcrud.com/api/"+token+"/pessoas")
+            .then(response => response.json())
+            .then(data => botaTabela(data) )
+            .catch(error => console.log(error));
+    
+    
+        //criado função botatabela que recebem dados da api de parametro
+           function botaTabela(pessoas){
+               console.log(pessoas);
+               //cria avariavel tabela que pega o corpo da tabela pelo id
+               //pega a tag tbody dentro da tabela 
+               ///[0] //pq gettagname retorna um array e queremos o primeiro elemento deste array
+               var tabela = document.getElementById('tabelaAlunos').getElementsByTagName("tbody")[0];
+               //inserir os dados na tabela apartir da avriavel do parametro pessoas
+              pessoas.forEach(function(pessoas){
+                var linha = tabela.insertRow();
+                var celulaNome = linha.insertCell(0);
+                var celulaNascimento= linha.insertCell(1);
+                var celulaTelefone = linha.insertCell(2);
+                var celulaEndereco = linha.insertCell(3);
+                var celulaExcluir = linha.insertCell(4);
+                var celulaAtualizar = linha.insertCell(5);
+    
+                celulaNome.innerHTML = pessoas.nome;
+                celulaNascimento.innerHTML = pessoas.nascimento;
+                celulaTelefone.innerHTML = pessoas.telefone;
+                celulaEndereco.innerHTML = pessoas.endereco;
+                celulaExcluir.innerHTML = '<button onclick="excluir(\'' + pessoas._id + '\')">Excluir</button>'
+                celulaAtualizar.innerHTML =   '<button onclick="atualizar(\'' + pessoas._id + '\',\''+pessoas.nome+'\',\''+pessoas.telefone+'\',\''+pessoas.endereco+'\',\''+pessoas.nascimento+'\')">Atualizar</button>';
+               })
+           };
+           function cadastrar() {
+        var token = "4f4d07480c7e485399f56c119b824e9d";
+          //Exemplo de requisição POST para adicionar uma nova pessoa
+        fetch("https://crudcrud.com/api/"+token+"/pessoas", {
+         //metodo de requisição (get, post, put, delete)
+        method: "POST",
+         //cabeçalho da requisição(tipo de conteudo, autorizações, etc...)
+        headers: {
+            "Content-Type": "application/json"
+        },
+        // corpo da requisição (dados que serão enviados)
+        body: JSON.stringify({
+            nome: document.getElementById('nome').value,
+            nascimento: document.getElementById('nascimento').value,
+            endereco: document.getElementById('endereco').value,
+            telefone: document.getElementById('telefone').value
+        })
+        })
+        .then(response => response.json())
+        .then(data => console.log("pessoa criado:", data))
+       .catch(error => console.error("Erro no POST:", error))
+       .finally(() => {
+            // redirecionar para a pagina inicial
+            setTimeout(window.location.href = "index2.html", 2000);
+            
+        });
+    }
+    function atualizar(id,nome,tel,end,data){
+            window.location.href = "atualizar.html?id="+id+"&nome="+nome+"&tel="+tel+"&end="+end+"&data="+data
+        }
+        function excluir(id){
+        fetch("https://crudcrud.com/api/"+token+"/pessoas/" + id, {
+            method: "DELETE"
+      })
+       .then(()=> console.log("pessoa deletada"))
+        .catch(error => console.error("Erro no  DELETE:", error))
+        .finally(() => {
+            // redirecionar para a pagina inicial
+           setTimeout(window.location.href = "tabela.html", 2000);
+            
+     });
+
+    }
+    </script>

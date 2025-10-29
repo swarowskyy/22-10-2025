@@ -1,0 +1,55 @@
+<a href="tabela.html">Voltar</a>
+<hr>
+<h3>Adicionar Novo Aluno</h3>
+                    Nome: 
+                    <input type="text" id="nome" name="nome" value="">
+                    <br>
+                    Nascimento: 
+                    <input type="date" id="nascimento" name="nascimento" value="">
+                    <br>
+                    Telefone: 
+                    <input type="text" id="telefone" name="telefone" value="">
+                    <br>
+                    Endereço: 
+                    <input type="text" id="endereco" name="endereco" value="">
+                    <br>
+                    <input type="hidden" name="acao" value="inserir">
+                    <button onclick="atualizar()">Atualizar</button>  
+ <script>
+const urlParams = new URLSearchParams(window.location.search);
+  var id = urlParams.get("id") 
+  var nome = urlParams.get("nome") 
+  var telefone = urlParams.get("tel") 
+  var endereco = urlParams.get("end") 
+  var nascimento = urlParams.get("data") 
+  
+  document.getElementById('nome').value = nome 
+  document.getElementById('telefone').value = telefone 
+  document.getElementById('endereco').value = endereco 
+  document.getElementById('nascimento').value = nascimento
+
+  function atualizar() {
+        var token = "4f4d07480c7e485399f56c119b824e9d";
+        //  Exemplo de requisição PUT para atualizar uma pessoa existente
+        fetch("https://crudcrud.com/api/"+token+"/pessoas/"+id, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: document.getElementById('nome').value,
+                nascimento: document.getElementById('nascimento').value,
+                endereco: document.getElementById('endereco').value,
+                telefone: document.getElementById('telefone').value
+            })
+            })
+            .then(() => console.log("Pessoa atualizado com sucesso"))
+            .catch(error => console.log(error))
+            .finally(() => {
+            // redirecionar para a pagina inicial
+            setTimeout(window.location.href = "lista.php", 2000);
+            
+        });
+    }
+  </script>
+  
